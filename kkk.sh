@@ -4,6 +4,20 @@ set -e  # Exit immediately if a command fails
 TOOLKIT_DIR="/usr/local/bin"
 PYTHON_BIN=$(which python3)
 
+
+
+# Dynamically find the repo root directory
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "")
+
+# Validate that we're in a Git repository
+if [ -z "$REPO_ROOT" ]; then
+    echo "[ERROR] Could not determine repository root. Ensure this script is inside a Git repo."
+    exit 1
+fi
+
+KUBE_UP_SCRIPT="$REPO_ROOT/kube_up.py"
+KUBE_DOWN_SCRIPT="$REPO_ROOT/kube_down.py"
+
 # Function to run commands with descriptions
 run_command() {
     echo -e "\n[INFO] $2..."
@@ -67,13 +81,23 @@ full_reset() {
 # Function to bring Kubernetes up
 kube_up() {
     echo -e "\n=== Bringing Kubernetes Up ==="
-    $PYTHON_BIN "$TOOLKIT_DIR/kube_up.py"
+    if [ -f "$KUBE_UP_SCRIPT" ]; then
+        $PYTHON_BIN "$KUBE_UP_SCRIPT"
+    else
+        echo "[ERROR] kube_up.py not found at $KUBE_UP_SCRIPT"
+        exit 1
+    fi
 }
 
 # Function to bring Kubernetes down
 kube_down() {
     echo -e "\n=== Bringing Kubernetes Down ==="
-    $PYTHON_BIN "$TOOLKIT_DIR/kube_down.py"
+    if [ -f "$KUBE_DOWN_SCRIPT" ]; then
+        $PYTHON_BIN "$KUBE_DOWN_SCRIPT"
+    else
+        echo "[ERROR] kube_down.py not found at $KUBE_DOWN_SCRIPT"
+        exit 1
+    fi
 }
 
 # Function to show help
