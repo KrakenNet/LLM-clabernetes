@@ -60,8 +60,8 @@ def main():
     kubeadm_reset()
     reset_kubeconfig()
     remove_kubernetes_files()
-    clean_kubernetes_iptables()
-    clean_kubernetes_routes()
+    # clean_kubernetes_iptables()
+    # clean_kubernetes_routes()
     print("\n[INFO] Kubernetes cluster has been completely reset.")
     print("[INFO] You can now run your Kubernetes setup script to start fresh.")
 
