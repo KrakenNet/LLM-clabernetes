@@ -1,0 +1,135 @@
+name: ground-network
+mgmt:
+  network: clab_ground
+  ipv4-subnet: 10.254.0.0/16
+topology:
+  kinds:
+    linux:
+      image: alpine
+    ceos:
+      image: ceos:4.31.2F
+    arista_ceos:
+      image: ceos:4.31.2F
+
+  nodes:
+    # Servers and nodes
+    s11ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.101
+      startup-config: configs/end.cfg
+    s11ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.102
+      startup-config: configs/end.cfg
+    s11svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.103
+      startup-config: configs/end.cfg
+    s11svcg002:
+      kind: linux
+      mgmt-ipv4:  10.254.0.104
+      startup-config: configs/end.cfg
+    s11svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.105
+      startup-config: configs/end.cfg
+    s11svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.106
+      startup-config: configs/end.cfg
+    b04ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.112
+      startup-config: configs/end.cfg
+    b04ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.113
+      startup-config: configs/end.cfg
+    b04svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.114
+      startup-config: configs/end.cfg
+    b04svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.115
+      startup-config: configs/end.cfg
+    b04svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.116
+      startup-config: configs/end.cfg
+    b04svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.117
+      startup-config: configs/end.cfg
+
+    # Switches
+    s11swg001:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.107
+    s11swg002:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.108
+    b04swg001:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.118
+    b04swg002:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.119
+
+    # Routers
+    s11rtg001:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.109
+    s11rtw001:
+       kind: arista_ceos
+       mgmt-ipv4: 10.254.0.110
+    s11rtw002:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.111
+    b04rtg001:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.120
+    b04rtw001:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.121
+    b04rtw002:
+      kind: arista_ceos
+      mgmt-ipv4: 10.254.0.122
+ 
+  links:
+    # s11gs VLAN
+    - endpoints: ["s11swg001:eth1", "s11svcg001:eth1"]
+    - endpoints: ["s11swg001:eth2", "s11svpg001:eth1"]
+    - endpoints: ["s11swg002:eth1", "s11svcg002:eth1"]
+    - endpoints: ["s11swg002:eth2", "s11svpg002:eth1"]
+
+    # s11gmgmt VLAN
+    - endpoints: ["s11swg001:eth3", "s11ssd001:eth1"]
+    - endpoints: ["s11swg002:eth3", "s11ssd002:eth1"]
+
+    # b04gs VLAN
+    - endpoints: ["b04swg001:eth1", "b04svcg001:eth1"]
+    - endpoints: ["b04swg001:eth2", "b04svpg001:eth1"]
+    - endpoints: ["b04swg002:eth1", "b04svcg002:eth1"]
+    - endpoints: ["b04swg002:eth2", "b04svpg002:eth1"]
+
+    # b04gmgmt VLAN
+    - endpoints: ["b04swg001:eth3", "b04ssd001:eth1"]
+    - endpoints: ["b04swg002:eth3", "b04ssd002:eth1"]
+
+    # Router to Switch Links with VLAN trunks
+    - endpoints: ["s11rtg001:eth1", "s11swg001:eth4"]
+    - endpoints: ["s11rtg001:eth2", "s11swg002:eth4"]
+    - endpoints: ["s11rtg001:eth3", "s11rtw001:eth1"]
+    - endpoints: ["s11rtg001:eth4", "s11rtw002:eth1"]
+    - endpoints: ["b04rtg001:eth1", "b04swg001:eth4"]
+    - endpoints: ["b04rtg001:eth2", "b04swg002:eth4"]
+    - endpoints: ["b04rtg001:eth3", "b04rtw001:eth1"]
+    - endpoints: ["b04rtg001:eth4", "b04rtw002:eth1"]
+
+    # Inter-Router Links with VRFs
+    - endpoints: ["s11rtw001:eth2", "b04rtw001:eth2"]
+    - endpoints: ["s11rtw002:eth2", "b04rtw002:eth2"]
+
+
+
