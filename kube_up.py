@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 from local import run_command
+import time
 
 cluster_n = 'cluster-1'
 
@@ -192,6 +193,7 @@ def main():
     """Main function to set up Kubernetes."""
     print("\n=== Kubernetes Cluster Setup Script ===\n")
     install_dependencies()
+    setup_ips()
     install_docker()
     install_cri_dockerd()
     install_kubernetes()
