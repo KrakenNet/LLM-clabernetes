@@ -16,8 +16,11 @@ def check_installed(package):
 
     return False
 
+def setup_ips():
+    print("[INFO] setting up ip's for kubernetes")
+    run_command("chmod +x kube_ip.sh && ./kube_ip.sh", "Setting up Kube-VIP IP configuration")
 
-
+#not instantiated yet
 def ensure_hostname_in_hosts():
     """Ensures the current hostname is present in /etc/hosts."""
     hostname = cluster_n
@@ -50,8 +53,6 @@ def ensure_hostname_in_hosts():
     except Exception as e:
         print(f"[ERROR] Failed to modify /etc/hosts: {e}")
 
-
-import time
 
 def wait_for_flannel():
     """Waits for Flannel DaemonSet to appear and become ready."""
@@ -89,6 +90,31 @@ def install_flannel():
 
     print("[INFO] Waiting for Flannel to be ready...")
     wait_for_flannel()
+
+
+
+
+
+def install_calico():
+    """Installs Calico as the CNI plugin for Kubernetes networking."""
+    print("\n[INFO] Installing Calico for Kubernetes networking...")
+
+    # Apply the official Calico manifest
+    apply_command = "kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml"
+    try:
+        subprocess.run(apply_command, shell=True, check=True)
+        print("[SUCCESS] Calico has been installed.")
+
+        # Verify installation
+        print("[INFO] Waiting for Calico pods to be ready...")
+        subprocess.run("kubectl wait --for=condition=Available -n kube-system daemonset/calico-node --timeout=120s", shell=True, check=True)
+        print("[SUCCESS] Calico pods are ready.")
+        
+    except subprocess.CalledProcessError as e:
+        print(f"[ERROR] Failed to install Calico: {e}")
+
+
+
 
 def install_docker():
     """Installs and configures Docker for Kubernetes."""
@@ -142,11 +168,12 @@ def initialize_cluster():
     if os.path.exists("/etc/kubernetes/admin.conf"):
         print("[SKIP] Kubernetes cluster already initialized.")
         return
-    run_command(f"sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket unix:///run/cri-dockerd.sock --node-name={cluster_n}", "Initializing Kubernetes cluster")
+    run_command(f"sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket unix:///run/cri-dockerd.sock", "Initializing Kubernetes cluster")
     run_command("mkdir -p $HOME/.kube", "Creating kubeconfig directory")
     run_command("sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config", "Copying kubeconfig file")
     run_command("sudo chown $(id -u):$(id -g) $HOME/.kube/config", "Setting kubeconfig ownership")
     install_flannel()
+    # install_calico()
     print ('[INFO] Clearing the Taint')
     run_command("kubectl taint nodes --all node-role.kubernetes.io/control-plane-", "Removing control-plane taint")
 
