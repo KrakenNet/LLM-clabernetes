@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e  # Exit immediately if a command fails
 
+TOOLKIT_DIR="/usr/local/bin"
+PYTHON_BIN=$(which python3)
+
 # Function to run commands with descriptions
 run_command() {
     echo -e "\n[INFO] $2..."
@@ -61,10 +64,24 @@ full_reset() {
     restart_kubeproxy
 }
 
+# Function to bring Kubernetes up
+kube_up() {
+    echo -e "\n=== Bringing Kubernetes Up ==="
+    $PYTHON_BIN "$TOOLKIT_DIR/kube_up.py"
+}
+
+# Function to bring Kubernetes down
+kube_down() {
+    echo -e "\n=== Bringing Kubernetes Down ==="
+    $PYTHON_BIN "$TOOLKIT_DIR/kube_down.py"
+}
+
 # Function to show help
 show_help() {
     echo -e "\nUsage: $0 [option]"
     echo -e "Options:"
+    echo -e "  up          Start Kubernetes (Runs kube_up.py)"
+    echo -e "  down        Stop Kubernetes (Runs kube_down.py)"
     echo -e "  net         Check Kubernetes networking"
     echo -e "  proxy       Check kube-proxy"
     echo -e "  iptables    Reset Kubernetes iptables rules"
@@ -77,6 +94,8 @@ show_help() {
 
 # Handle command-line arguments
 case "$1" in
+    up) kube_up ;;
+    down) kube_down ;;
     net) check_networking ;;
     proxy) check_kubeproxy ;;
     iptables) reset_iptables ;;
