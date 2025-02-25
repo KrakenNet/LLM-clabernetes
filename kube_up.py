@@ -169,7 +169,7 @@ def initialize_cluster():
     if os.path.exists("/etc/kubernetes/admin.conf"):
         print("[SKIP] Kubernetes cluster already initialized.")
         return
-    run_command(f"sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket unix:///run/cri-dockerd.sock", "Initializing Kubernetes cluster")
+    run_command(f"sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket unix:///run/cri-dockerd.sock --node-name={cluster_n}", "Initializing Kubernetes cluster")
     run_command("mkdir -p $HOME/.kube", "Creating kubeconfig directory")
     run_command("sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config", "Copying kubeconfig file")
     run_command("sudo chown $(id -u):$(id -g) $HOME/.kube/config", "Setting kubeconfig ownership")
