@@ -66,35 +66,45 @@ topology:
     s11swg001:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.107
+      startup-config: configs/end.cfg
     s11swg002:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.108
+      startup-config: configs/end.cfg
     b04swg001:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.118
+      startup-config: configs/end.cfg
     b04swg002:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.119
+      startup-config: configs/end.cfg
 
     # Routers
     s11rtg001:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.109
+      startup-config: configs/end.cfg
     s11rtw001:
        kind: arista_ceos
        mgmt-ipv4: 10.254.0.110
+       startup-config: configs/end.cfg
     s11rtw002:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.111
+      startup-config: configs/end.cfg
     b04rtg001:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.120
+      startup-config: configs/end.cfg
     b04rtw001:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.121
+      startup-config: configs/end.cfg
     b04rtw002:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.122
+      startup-config: configs/end.cfg
  
   links:
     # s11gs VLAN
