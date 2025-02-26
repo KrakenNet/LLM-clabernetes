@@ -18,6 +18,8 @@ fi
 KUBE_UP_SCRIPT="$REPO_ROOT/kube_up.py"
 KUBE_DOWN_SCRIPT="$REPO_ROOT/kube_down.py"
 CLABER_UP_SCRIPT="$REPO_ROOT/claber_up.py"
+MAIN_PROJ_SCRIPT="$REPO_ROOT/main.py"
+
 
 # Function to run commands with descriptions
 run_command() {
@@ -111,13 +113,24 @@ claber_up(){
     fi
 }
 
+main_proj(){
+        echo -e "\n=== Bringing Clabernetes Up ==="
+    if [ -f "$MAIN_PROJ_SCRIPT" ]; then
+        $PYTHON_BIN "$MAIN_PROJ_SCRIPT"
+    else
+        echo "[ERROR] main.py not found at $MAIN_PROJ_SCRIPT"
+        exit 1
+    fi
+}
+
 # Function to show help
 show_help() {
     echo -e "\nUsage: $0 [option]"
     echo -e "Options:"
     echo -e "  up          Start Kubernetes (Runs kube_up.py)"
     echo -e "  down        Stop Kubernetes (Runs kube_down.py)"
-    echo -e "  clab        Brign Clabernetes up(runs claber_up.py)"
+    echo -e "  main        Run Main Project(Runs main.py)"
+    echo -e "  clab        Bring Clabernetes up(runs claber_up.py)"
     echo -e "  net         Check Kubernetes networking"
     echo -e "  proxy       Check kube-proxy"
     echo -e "  iptables    Reset Kubernetes iptables rules"
@@ -132,6 +145,7 @@ show_help() {
 case "$1" in
     up) kube_up ;;
     down) kube_down ;;
+    main) main_proj ;;
     clab) claber_up ;;
     net) check_networking ;;
     proxy) check_kubeproxy ;;
