@@ -35,14 +35,7 @@ namespace = ''
 #         print(f"Error Output:\n{e}")
 #         if exit_on_fail:
 #             sys.exit(1)
-image_paths = [
-    "/sicn/netdoor/ceos.tar"
-    ]
 
-
-def setup_unavailable_images():
-    for image in image_paths:
-        run_command("kubectl cp /images/ceos.tar kube-system/kube-controller-manager-knius:/tmp", f"Copying {image} into kube-controller")
 
 
 
