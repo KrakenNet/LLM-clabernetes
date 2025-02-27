@@ -6,35 +6,43 @@ from local import run_command
 
 namespace = ''
 
-def run_piped_command(cmd1, cmd2, description="Executing piped command", exit_on_fail=True):
-    """Runs two shell commands, piping the output of the first into the second."""
-    print(f"\n[INFO] {description}...")
-    try:
-        # Start the first process (clabverter)
-        process1 = subprocess.Popen(cmd1.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+# def run_piped_command(cmd1, cmd2, description="Executing piped command", exit_on_fail=True):
+#     """Runs two shell commands, piping the output of the first into the second."""
+#     print(f"\n[INFO] {description}...")
+#     try:
+#         # Start the first process (clabverter)
+#         process1 = subprocess.Popen(cmd1.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-        # Start the second process (kubectl apply) and pipe the output from process1
-        process2 = subprocess.Popen(cmd2.split(), stdin=process1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+#         # Start the second process (kubectl apply) and pipe the output from process1
+#         process2 = subprocess.Popen(cmd2.split(), stdin=process1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
-        # Close process1 stdout so process2 knows input is finished
-        process1.stdout.close()
+#         # Close process1 stdout so process2 knows input is finished
+#         process1.stdout.close()
         
-        # Capture output
-        stdout, stderr = process2.communicate()
+#         # Capture output
+#         stdout, stderr = process2.communicate()
 
-        print(stdout, end="")
-        if stderr:
-            print(stderr, end="")
+#         print(stdout, end="")
+#         if stderr:
+#             print(stderr, end="")
 
-        if process2.returncode != 0:
-            raise subprocess.CalledProcessError(process2.returncode, cmd2)
+#         if process2.returncode != 0:
+#             raise subprocess.CalledProcessError(process2.returncode, cmd2)
 
-        print(f"[SUCCESS] {description}")
-    except subprocess.CalledProcessError as e:
-        print(f"[ERROR] {description} failed.")
-        print(f"Error Output:\n{e}")
-        if exit_on_fail:
-            sys.exit(1)
+#         print(f"[SUCCESS] {description}")
+#     except subprocess.CalledProcessError as e:
+#         print(f"[ERROR] {description} failed.")
+#         print(f"Error Output:\n{e}")
+#         if exit_on_fail:
+#             sys.exit(1)
+image_paths = [
+    "/sicn/netdoor/ceos.tar"
+    ]
+
+
+def setup_unavailable_images():
+    for image in image_paths:
+        run_command("kubectl cp /images/ceos.tar kube-system/kube-controller-manager-knius:/tmp", f"Copying {image} into kube-controller")
 
 
 
