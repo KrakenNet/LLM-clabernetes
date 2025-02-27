@@ -21,6 +21,53 @@ def setup_ips():
     print("[INFO] setting up ip's for kubernetes")
     run_command("chmod +x kube_ip.sh && ./kube_ip.sh", "Setting up Kube-VIP IP configuration")
 
+def check_and_load_netfilter():
+    """Ensures br_netfilter is loaded and persists sysctl settings without duplication."""
+    
+    print("\n=== Checking Netfilter Module ===")
+
+    # Check if br_netfilter is loaded
+    result = subprocess.run("lsmod | grep -q br_netfilter", shell=True)
+    
+    if result.returncode == 0:
+        print("[INFO] br_netfilter module is already loaded.")
+    else:
+        print("[WARNING] br_netfilter module is not loaded. Loading it now...")
+        run_command("sudo modprobe br_netfilter", "Loading br_netfilter module")
+
+        # Verify that the module was loaded
+        result = subprocess.run("lsmod | grep -q br_netfilter", shell=True)
+        if result.returncode == 0:
+            print("[SUCCESS] br_netfilter module successfully loaded.")
+        else:
+            print("[ERROR] Failed to load br_netfilter module.")
+            return
+    
+    print("\n=== Ensuring Persistent Netfilter Settings ===")
+
+    # Remove any existing net.bridge entries to avoid duplicates
+    run_command("sudo sed -i '/^net.bridge.bridge-nf-call-iptables/d' /etc/sysctl.conf", "Removing duplicate net.bridge.bridge-nf-call-iptables")
+    run_command("sudo sed -i '/^net.bridge.bridge-nf-call-ip6tables/d' /etc/sysctl.conf", "Removing duplicate net.bridge.bridge-nf-call-ip6tables")
+
+    # Check if the settings already exist before adding them
+    check_iptables = subprocess.run("grep -q '^net.bridge.bridge-nf-call-iptables = 1' /etc/sysctl.conf", shell=True)
+    check_ip6tables = subprocess.run("grep -q '^net.bridge.bridge-nf-call-ip6tables = 1' /etc/sysctl.conf", shell=True)
+
+    if check_iptables.returncode != 0:
+        run_command("echo 'net.bridge.bridge-nf-call-iptables = 1' | sudo tee -a /etc/sysctl.conf > /dev/null", "Adding net.bridge.bridge-nf-call-iptables")
+
+    if check_ip6tables.returncode != 0:
+        run_command("echo 'net.bridge.bridge-nf-call-ip6tables = 1' | sudo tee -a /etc/sysctl.conf > /dev/null", "Adding net.bridge.bridge-nf-call-ip6tables")
+
+    # Ensure module is loaded on boot
+    run_command("echo 'br_netfilter' | sudo tee /etc/modules-load.d/k8s.conf > /dev/null", "Persisting br_netfilter module")
+
+    # Apply sysctl changes
+    run_command("sudo sysctl --system", "Applying sysctl settings")
+
+
+
+
 #not instantiated yet
 def ensure_hostname_in_hosts():
     """Ensures the current hostname is present in /etc/hosts."""
@@ -153,6 +200,7 @@ def install_kubernetes():
     kube_packages = ["kubelet", "kubeadm", "kubectl"]
     if all(check_installed(pkg) for pkg in kube_packages):
         return
+    print("[INFO] installing kubernetes")
     run_command("sudo mkdir -p /etc/apt/keyrings", "Creating keyrings directory")
     run_command("curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg", "Adding Kubernetes GPG key")
     run_command("echo \"deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /\" | sudo tee /etc/apt/sources.list.d/kubernetes.list", "Adding Kubernetes repository")
@@ -161,6 +209,8 @@ def install_kubernetes():
         if not check_installed(package):
             run_command(f"sudo apt-get install -y {package}", f"Installing {package}")
     run_command("sudo apt-mark hold kubelet kubeadm kubectl", "Holding Kubernetes packages to prevent updates")
+    run_command("sudo swapoff -a", "Temporarily disabling swap")
+    run_command("sudo sed -i '/swap/d' /etc/fstab", "Disabling Swap on reboot")
     print("[INFO] Applying kube-proxy configuration")
     run_command("kubectl apply -f https://raw.githubusercontent.com/kubernetes/kubernetes/master/cluster/addons/kube-proxy/kube-proxy.yaml", "Applying kube-proxy settings")
 
@@ -169,7 +219,7 @@ def initialize_cluster():
     if os.path.exists("/etc/kubernetes/admin.conf"):
         print("[SKIP] Kubernetes cluster already initialized.")
         return
-    run_command(f"sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket unix:///run/cri-dockerd.sock --node-name={cluster_n}", "Initializing Kubernetes cluster")
+    run_command(f"sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket unix:///run/cri-dockerd.sock", "Initializing Kubernetes cluster")
     run_command("mkdir -p $HOME/.kube", "Creating kubeconfig directory")
     run_command("sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config", "Copying kubeconfig file")
     run_command("sudo chown $(id -u):$(id -g) $HOME/.kube/config", "Setting kubeconfig ownership")
@@ -194,11 +244,11 @@ def main():
     print("\n=== Kubernetes Cluster Setup Script ===\n")
     install_dependencies()
     setup_ips()
+    check_and_load_netfilter()
     install_docker()
     install_cri_dockerd()
     install_kubernetes()
     initialize_cluster()
-    # install_flannel()
     setup_kube_vip_loadbalancer()
     print("\n[INFO] Kubernetes cluster setup complete!")
     print("[INFO] Run 'kubectl get nodes' to verify cluster status.")
