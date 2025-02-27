@@ -123,14 +123,20 @@ main_proj(){
     fi
 }
 
+# Function to open a debug pod
+open_debug_pod() {
+    echo -e "\n=== Opening Debug Pod ==="
+    run_command "kubectl run debug-pod --rm -it --image=busybox -- /bin/sh" "Starting debug pod with BusyBox"
+}
+
 # Function to show help
 show_help() {
     echo -e "\nUsage: $0 [option]"
     echo -e "Options:"
     echo -e "  up          Start Kubernetes (Runs kube_up.py)"
     echo -e "  down        Stop Kubernetes (Runs kube_down.py)"
-    echo -e "  main        Run Main Project(Runs main.py)"
-    echo -e "  clab        Bring Clabernetes up(runs claber_up.py)"
+    echo -e "  main        Run Main Project (Runs main.py)"
+    echo -e "  clab        Bring Clabernetes up (Runs claber_up.py)"
     echo -e "  net         Check Kubernetes networking"
     echo -e "  proxy       Check kube-proxy"
     echo -e "  iptables    Reset Kubernetes iptables rules"
@@ -138,6 +144,7 @@ show_help() {
     echo -e "  dns         Check CoreDNS"
     echo -e "  flannel     Check Flannel networking"
     echo -e "  reset       Perform a full Kubernetes reset"
+    echo -e "  debug       Open a debug pod"
     echo -e "  help        Show this help message"
 }
 
@@ -154,6 +161,7 @@ case "$1" in
     dns) check_coredns ;;
     flannel) check_flannel ;;
     reset) full_reset ;;
+    debug) open_debug_pod ;;
     help) show_help ;;
     *) echo "[ERROR] Invalid option. Use 'help' for usage."; exit 1 ;;
 esac
