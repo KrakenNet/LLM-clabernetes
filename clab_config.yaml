@@ -1,0 +1,10 @@
+apiVersion: clabernetes.containerlab.dev/v1alpha1
+kind: Config
+metadata:
+  name: clabernetes
+spec:
+  deployment:
+    launcherImagePullPolicy: "never"
+    containerlabDebug: 'true'  
+  imagePull:
+    pullThroughOverride: "never"

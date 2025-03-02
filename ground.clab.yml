@@ -7,9 +7,9 @@ topology:
     linux:
       image: alpine
     ceos:
-      image: docker.io/library/ceos:4.31.2F
+      image: ceos
     arista_ceos:
-      image: docker.io/library/ceos:4.31.2F
+      image: ceos
 
   nodes:
     # Servers and nodes
