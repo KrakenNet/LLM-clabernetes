@@ -43,6 +43,11 @@ def install_clabernetes():
     """Installs Clabernetes into the Kubernetes cluster."""
     run_command("helm upgrade --install --create-namespace --namespace c9s clabernetes oci://ghcr.io/srl-labs/clabernetes/clabernetes", 
                 "Installing Clabernetes via Helm")
+    
+
+def install_un_s_images():
+    """Set up the UnS images in the Kubernetes cluster."""
+    run_command("python3 setup_images.py", "Running setup_images.py to install local images")
 
 def install_clabverter():
     """Sets up Clabverter for converting topologies."""

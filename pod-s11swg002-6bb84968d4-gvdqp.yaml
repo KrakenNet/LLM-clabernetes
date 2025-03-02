@@ -1,0 +1,204 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2025-02-27T22:20:44Z"
+  generateName: s11swg002-6bb84968d4-
+  labels:
+    app.kubernetes.io/name: s11swg002
+    clabernetes/app: clabernetes
+    clabernetes/name: s11swg002
+    clabernetes/topologyNode: s11swg002
+    clabernetes/topologyOwner: ground-network
+    pod-template-hash: 6bb84968d4
+  name: s11swg002-6bb84968d4-gvdqp
+  namespace: c9s-ground-network
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: s11swg002-6bb84968d4
+    uid: 5ed1c78d-bfb2-4c2b-85e3-c55b9536e59f
+  resourceVersion: "18241"
+  uid: 0b8b8967-9882-401f-a1a4-689b9ed280a8
+spec:
+  containers:
+  - command:
+    - /clabernetes/manager
+    - launch
+    env:
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: spec.nodeName
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    - name: APP_NAME
+      value: clabernetes
+    - name: MANAGER_NAMESPACE
+      value: c9s
+    - name: LAUNCHER_CRI_KIND
+      value: unknown
+    - name: LAUNCHER_IMAGE_PULL_THROUGH_MODE
+      value: auto
+    - name: LAUNCHER_LOGGER_LEVEL
+      value: info
+    - name: LAUNCHER_TOPOLOGY_NAME
+      value: ground-network
+    - name: LAUNCHER_NODE_NAME
+      value: s11swg002
+    - name: LAUNCHER_NODE_IMAGE
+      value: ceos:4.31.2F
+    - name: LAUNCHER_CONNECTIVITY_KIND
+      value: vxlan
+    - name: LAUNCHER_CONTAINERLAB_VERSION
+    - name: LAUNCHER_CONTAINERLAB_TIMEOUT
+    - name: LAUNCHER_PRIVILEGED
+      value: "true"
+    image: ghcr.io/srl-labs/clabernetes/clabernetes-launcher:0.2.5
+    imagePullPolicy: Never
+    name: s11swg002
+    ports:
+    - containerPort: 14789
+      name: vxlan
+      protocol: UDP
+    - containerPort: 4799
+      name: slurpeeth
+      protocol: TCP
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+    securityContext:
+      privileged: true
+      runAsUser: 0
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /clabernetes/topo.clab.yaml
+      name: ground-network-config
+      readOnly: true
+      subPath: s11swg002
+    - mountPath: /clabernetes/files-from-url.yaml
+      name: ground-network-config
+      readOnly: true
+      subPath: s11swg002-files-from-url
+    - mountPath: /clabernetes/configured-pull-secrets.yaml
+      name: ground-network-config
+      readOnly: true
+      subPath: configured-pull-secrets
+    - mountPath: /clabernetes/configs/end.cfg
+      name: ground-network-s11swg002-startup-config-startup-config
+      subPath: startup-config
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-9hf5d
+      readOnly: true
+    workingDir: /clabernetes
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostname: s11swg002
+  nodeName: knius
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: clabernetes-launcher-service-account
+  serviceAccountName: clabernetes-launcher-service-account
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - configMap:
+      defaultMode: 493
+      name: ground-network
+    name: ground-network-config
+  - configMap:
+      defaultMode: 292
+      name: ground-network-s11swg002-startup-config
+    name: ground-network-s11swg002-startup-config-startup-config
+  - name: kube-api-access-9hf5d
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-02-27T22:20:44Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-02-27T22:20:54Z"
+    message: 'containers with unready status: [s11swg002]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-02-27T22:20:54Z"
+    message: 'containers with unready status: [s11swg002]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-02-27T22:20:44Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://f139c9f711b84b429673e4e80dc98571dd8cb14c0490903e962b0a060f464216
+    image: ghcr.io/srl-labs/clabernetes/clabernetes-launcher:0.2.5
+    imageID: docker-pullable://ghcr.io/srl-labs/clabernetes/clabernetes-launcher@sha256:6cd69270ee3acf0f0b6458982644a2922acac8f4edc0883314cbac1cc090dd5e
+    lastState:
+      terminated:
+        containerID: docker://5f8c642f29681fb4e643a6b1a2ebf8037e42784b722be650a8602245e46d52a6
+        exitCode: 1
+        finishedAt: "2025-02-27T22:20:48Z"
+        reason: Error
+        startedAt: "2025-02-27T22:20:44Z"
+    name: s11swg002
+    ready: false
+    restartCount: 1
+    started: false
+    state:
+      terminated:
+        containerID: docker://f139c9f711b84b429673e4e80dc98571dd8cb14c0490903e962b0a060f464216
+        exitCode: 1
+        finishedAt: "2025-02-27T22:20:54Z"
+        reason: Error
+        startedAt: "2025-02-27T22:20:49Z"
+  hostIP: 192.168.68.74
+  phase: Running
+  podIP: 10.244.0.54
+  podIPs:
+  - ip: 10.244.0.54
+  qosClass: Burstable
+  startTime: "2025-02-27T22:20:44Z"

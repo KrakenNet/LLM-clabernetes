@@ -2,7 +2,7 @@ from local import run_command
 
 
 image_paths = [
-    "/sicn/netdoor/ceos.tar"
+    "/images/ceos.tar"
     ]
 
 

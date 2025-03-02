@@ -163,6 +163,41 @@ def install_calico():
 
 
 
+def is_swap_disabled():
+    """Checks if swap is disabled and forces it off if still enabled, retrying up to 3 times."""
+    print("\n[INFO] Verifying that swap is disabled...")
+
+    # Run the command using subprocess and capture the output
+    result = subprocess.run("swapon --show", shell=True, capture_output=True, text=True)
+
+    if result.stdout.strip():  # If there's output, swap is still enabled
+        print("[ERROR] Swap is still enabled! Attempting to disable it...")
+
+        for attempt in range(1, 4):  # Try up to 3 times
+            print(f"[INFO] Attempt {attempt} to disable swap...")
+            
+            # Disable swap temporarily
+            subprocess.run("sudo swapoff -a", shell=True, check=False)
+            
+            # Permanently disable swap in /etc/fstab
+            subprocess.run("sudo sed -i '/swap/d' /etc/fstab", shell=True, check=False)
+
+            # Wait 2 seconds before rechecking
+            time.sleep(2)
+
+            # Verify if swap is disabled
+            result = subprocess.run("swapon --show", shell=True, capture_output=True, text=True)
+            if not result.stdout.strip():  # If no output, swap is disabled
+                print(f"[SUCCESS] Swap successfully disabled on attempt {attempt}.")
+                return
+
+        # If all attempts fail, exit with an error
+        print("[FATAL ERROR] Swap could not be disabled after 3 attempts. Please disable it manually and rerun the script.")
+        sys.exit(1)
+    else:
+        print("[SUCCESS] Swap is already disabled.")
+
+
 
 def install_docker():
     """Installs and configures Docker for Kubernetes."""
@@ -197,6 +232,7 @@ def install_cri_dockerd():
 
 def install_kubernetes():
     """Installs Kubernetes components (kubelet, kubeadm, kubectl)."""
+    is_swap_disabled()
     kube_packages = ["kubelet", "kubeadm", "kubectl"]
     if all(check_installed(pkg) for pkg in kube_packages):
         return
@@ -209,8 +245,7 @@ def install_kubernetes():
         if not check_installed(package):
             run_command(f"sudo apt-get install -y {package}", f"Installing {package}")
     run_command("sudo apt-mark hold kubelet kubeadm kubectl", "Holding Kubernetes packages to prevent updates")
-    run_command("sudo swapoff -a", "Temporarily disabling swap")
-    run_command("sudo sed -i '/swap/d' /etc/fstab", "Disabling Swap on reboot")
+    
     print("[INFO] Applying kube-proxy configuration")
     run_command("kubectl apply -f https://raw.githubusercontent.com/kubernetes/kubernetes/master/cluster/addons/kube-proxy/kube-proxy.yaml", "Applying kube-proxy settings")
 
