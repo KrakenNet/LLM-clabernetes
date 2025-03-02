@@ -7,9 +7,9 @@ topology:
     linux:
       image: alpine
     ceos:
-      image: ceos:4.31.2F
+      image: docker.io/library/ceos:4.31.2F
     arista_ceos:
-      image: ceos:4.31.2F
+      image: docker.io/library/ceos:4.31.2F
 
   nodes:
     # Servers and nodes
@@ -67,22 +67,18 @@ topology:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.107
       startup-config: configs/end.cfg
-      imagePullPolicy: Never
     s11swg002:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.108
       startup-config: configs/end.cfg
-      imagePullPolicy: Never
     b04swg001:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.118
       startup-config: configs/end.cfg
-      imagePullPolicy: Never
     b04swg002:
       kind: arista_ceos
       mgmt-ipv4: 10.254.0.119
       startup-config: configs/end.cfg
-      imagePullPolicy: Never
 
     # Routers
     s11rtg001:
