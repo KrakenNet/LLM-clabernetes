@@ -4,9 +4,9 @@
 add_rule_if_not_exists() {
     local rule="$1"
     if sudo iptables-save | grep --quiet -- "$rule"; then
-        echo "✅ Rule already exists: $rule"
+        echo " Rule already exists: $rule"
     else
-        echo "➕ Adding rule: $rule"
+        echo " Adding rule: $rule"
         sudo iptables $rule
     fi
 }
