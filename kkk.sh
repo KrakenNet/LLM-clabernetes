@@ -126,8 +126,10 @@ main_proj(){
 # Function to open a debug pod
 open_debug_pod() {
     echo -e "\n=== Opening Debug Pod ==="
-    run_command "kubectl run debug-pod --rm -it --image=busybox -- /bin/sh" "Starting debug pod with BusyBox"
+    run_command "kubectl run debug-pod --rm -it --image=ubuntu -- bash -c 'apt update && apt install -y iputils-ping net-tools dnsutils curl wget iproute2 tcpdump nmap traceroute && bash'" \
+    "Starting debug pod with Ubuntu and installing networking tools"
 }
+
 
 proxy_up() {
     echo -e "\n=== Starting kubectl proxy ==="
