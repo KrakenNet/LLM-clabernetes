@@ -129,6 +129,19 @@ open_debug_pod() {
     run_command "kubectl run debug-pod --rm -it --image=busybox -- /bin/sh" "Starting debug pod with BusyBox"
 }
 
+proxy_up() {
+    echo -e "\n=== Starting kubectl proxy ==="
+    nohup kubectl proxy --port=8001 --address=0.0.0.0 --disable-filter=true > kubectl-proxy.log 2>&1 &
+    echo "[SUCCESS] kubectl proxy started in the background. Logs: kubectl-proxy.log"
+}
+
+# Function to stop kubectl proxy
+proxy_down() {
+    echo -e "\n=== Stopping kubectl proxy ==="
+    pkill -f "kubectl proxy"
+    echo "[SUCCESS] kubectl proxy stopped."
+}
+
 # Function to show help
 show_help() {
     echo -e "\nUsage: $0 [option]"
@@ -143,6 +156,8 @@ show_help() {
     echo -e "  restart     Restart kube-proxy"
     echo -e "  dns         Check CoreDNS"
     echo -e "  flannel     Check Flannel networking"
+    echo -e "  pu          Start kubectl proxy in the background"
+    echo -e "  pd          Stop kubectl proxy"
     echo -e "  reset       Perform a full Kubernetes reset"
     echo -e "  debug       Open a debug pod"
     echo -e "  help        Show this help message"
@@ -160,6 +175,8 @@ case "$1" in
     restart) restart_kubeproxy ;;
     dns) check_coredns ;;
     flannel) check_flannel ;;
+    pu) proxy_up ;;
+    pd) proxy_down ;;
     reset) full_reset ;;
     debug) open_debug_pod ;;
     help) show_help ;;
