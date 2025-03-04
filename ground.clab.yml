@@ -7,9 +7,9 @@ topology:
     linux:
       image: alpine
     ceos:
-      image: ceos
+      image: ceos:4.31.2F
     arista_ceos:
-      image: ceos
+      image: ceos:4.31.2F
 
   nodes:
     # Servers and nodes
