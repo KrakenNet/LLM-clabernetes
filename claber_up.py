@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 from local import run_command
+import time
 
 namespace = ''
 
@@ -16,6 +17,9 @@ def check_helm():
     except subprocess.CalledProcessError:
         print("[ERROR] Helm command failed. Attempting reinstallation...")
         install_helm()
+
+
+
 
 def install_helm():
     """Installs Helm based on the operating system."""
@@ -66,7 +70,8 @@ def main():
     install_clabverter()
     manifest_file = "generated-manifest.yml"
 
-    topology_file = "stress.clab.yml"
+    topology_file = "ground.clab.yml"
+    time.sleep(20)
     convert_deploy(topology_file)
     verify_deployment()
     
