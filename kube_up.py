@@ -17,23 +17,28 @@ def check_installed(package):
 
     return False
 
-
 def check_and_kill_ports():
     """Checks if required Kubernetes ports are available and kills any processes using them."""
     required_ports = [6443, 2379, 2380, 10250, 10259, 10257]
+    max_retries = 3
     
     for port in required_ports:
-        result = subprocess.run(f"sudo lsof -i :{port}", shell=True, capture_output=True, text=True)
-        if result.returncode == 0:
-            print(f"[WARNING] Port {port} is in use. Attempting to free it...")
-            lines = result.stdout.split('\n')
-            for line in lines[1:]:  
-                parts = line.split()
-                if len(parts) > 1:
-                    pid = parts[1]
-                    run_command(f"sudo kill -9 {pid}", f"Killing process {pid} using port {port}")
+        for attempt in range(1, max_retries + 1):
+            result = subprocess.run(f"sudo lsof -i :{port}", shell=True, capture_output=True, text=True)
+            if result.returncode == 0:
+                print(f"[WARNING] Port {port} is in use. Attempting to free it (Attempt {attempt}/{max_retries})...")
+                lines = result.stdout.split('\n')
+                for line in lines[1:]:  # Skip header
+                    parts = line.split()
+                    if len(parts) > 1:
+                        pid = parts[1]
+                        run_command(f"sudo kill -9 {pid}", f"Killing process {pid} using port {port}")
+                time.sleep(2)  # Wait before rechecking
+            else:
+                print(f"[INFO] Port {port} is available.")
+                break
         else:
-            print(f"[INFO] Port {port} is available.")
+            print(f"[ERROR] Port {port} is still in use after {max_retries} attempts. Manual intervention required.")
 
 def setup_ips():
     print("[INFO] setting up ip's for kubernetes")
