@@ -19,6 +19,7 @@ KUBE_UP_SCRIPT="$REPO_ROOT/kube_up.py"
 KUBE_DOWN_SCRIPT="$REPO_ROOT/kube_down.py"
 CLABER_UP_SCRIPT="$REPO_ROOT/claber_up.py"
 MAIN_PROJ_SCRIPT="$REPO_ROOT/main.py"
+LEAF_SCRIPT="REPO_ROOT/join_leaf_nodes.py"
 
 
 # Function to run commands with descriptions
@@ -123,6 +124,16 @@ main_proj(){
     fi
 }
 
+leaf_nodes(){
+        echo -e "\n=== Bringing Leaf Nodes Up ==="
+    if [ -f "LEAF_SCRIPT" ]; then
+        $PYTHON_BIN "$LEAF_SCRIPT"
+    else
+        echo "[ERROR] joing_leaf_nodes.py not found at $LEAF_SCRIPT"
+        exit 1
+    fi
+}
+
 # Function to open a debug pod
 open_debug_pod() {
     echo -e "\n=== Opening Debug Pod ==="
@@ -152,6 +163,7 @@ show_help() {
     echo -e "  down        Stop Kubernetes (Runs kube_down.py)"
     echo -e "  main        Run Main Project (Runs main.py)"
     echo -e "  clab        Bring Clabernetes up (Runs claber_up.py)"
+    echo -e "  leaf        Bring Leaf Nodes up (Runs join_leaf_nodes.py)"
     echo -e "  net         Check Kubernetes networking"
     echo -e "  proxy       Check kube-proxy"
     echo -e "  iptables    Reset Kubernetes iptables rules"
@@ -171,6 +183,7 @@ case "$1" in
     down) kube_down ;;
     main) main_proj ;;
     clab) claber_up ;;
+    leaf) join_leaf_nodes ;;
     net) check_networking ;;
     proxy) check_kubeproxy ;;
     iptables) reset_iptables ;;
