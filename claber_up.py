@@ -3,47 +3,40 @@ import subprocess
 import sys
 from local import run_command
 
-
 namespace = ''
 
-# def run_piped_command(cmd1, cmd2, description="Executing piped command", exit_on_fail=True):
-#     """Runs two shell commands, piping the output of the first into the second."""
-#     print(f"\n[INFO] {description}...")
-#     try:
-#         # Start the first process (clabverter)
-#         process1 = subprocess.Popen(cmd1.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+def check_helm():
+    """Checks if Helm is installed, and installs it if not found."""
+    try:
+        subprocess.run(["helm", "version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print("[INFO] Helm is already installed.")
+    except subprocess.CalledProcessError:
+        print("[WARNING] Helm is not installed. Installing now...")
+        install_helm()
 
-#         # Start the second process (kubectl apply) and pipe the output from process1
-#         process2 = subprocess.Popen(cmd2.split(), stdin=process1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+def install_helm():
+    """Installs Helm based on the operating system."""
+    try:
+        if sys.platform.startswith("linux"):
+            run_command("curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash", 
+                        "Installing Helm on Linux")
+        elif sys.platform.startswith("darwin"):
+            run_command("brew install helm", "Installing Helm on macOS using Homebrew")
+        elif sys.platform.startswith("win"):
+            run_command("choco install kubernetes-helm", "Installing Helm on Windows using Chocolatey")
+        else:
+            print("[ERROR] Unsupported OS for automatic Helm installation. Install Helm manually.")
+            sys.exit(1)
         
-#         # Close process1 stdout so process2 knows input is finished
-#         process1.stdout.close()
-        
-#         # Capture output
-#         stdout, stderr = process2.communicate()
-
-#         print(stdout, end="")
-#         if stderr:
-#             print(stderr, end="")
-
-#         if process2.returncode != 0:
-#             raise subprocess.CalledProcessError(process2.returncode, cmd2)
-
-#         print(f"[SUCCESS] {description}")
-#     except subprocess.CalledProcessError as e:
-#         print(f"[ERROR] {description} failed.")
-#         print(f"Error Output:\n{e}")
-#         if exit_on_fail:
-#             sys.exit(1)
-
-
-
+        print("[SUCCESS] Helm installed successfully.")
+    except Exception as e:
+        print(f"[ERROR] Helm installation failed: {e}")
+        sys.exit(1)
 
 def install_clabernetes():
     """Installs Clabernetes into the Kubernetes cluster."""
     run_command("helm upgrade --install --create-namespace --namespace c9s clabernetes oci://ghcr.io/srl-labs/clabernetes/clabernetes", 
                 "Installing Clabernetes via Helm")
-    
 
 def install_un_s_images():
     """Set up the UnS images in the Kubernetes cluster."""
@@ -54,17 +47,8 @@ def install_clabverter():
     run_command("alias clabverter='sudo docker run --user $(id -u) -v $(pwd):/clabernetes/work --rm ghcr.io/srl-labs/clabernetes/clabverter'", 
                 "Setting up Clabverter alias")
 
-# def convert_topology(topology_file):
-#     """Converts an existing Containerlab topology to Clabernetes-compatible format."""
-#     run_command(f"clabverter -t {topology_file}", "Converting topology with Clabverter")
-
 def convert_deploy(topology_file):
     run_command("./deploy_clab.sh", "Converting and Deploying the Lab")
-
-
-# def deploy_custom_lab(manifest_file):
-#     """Deploys the custom lab into the Kubernetes cluster."""
-#     run_command(f"kubectl apply -f {manifest_file}", "Deploying custom lab")
 
 def verify_deployment():
     """Verifies that Clabernetes and the lab are running."""
@@ -74,14 +58,14 @@ def verify_deployment():
 def main():
     """Main function to deploy Clabernetes and a custom lab."""
     print("\n=== Clabernetes Setup Script ===\n")
+    check_helm()  # Ensure Helm is installed before proceeding
     install_clabernetes()
     install_clabverter()
+    
     topology_file = "ground.clab.yml"
-    manifest_file = "generated-manifest.yml"
-    # convert_topology(topology_file)
-    # deploy_custom_lab(manifest_file)
     convert_deploy(topology_file)
     verify_deployment()
+    
     print("\n[INFO] Clabernetes setup complete!")
     print("[INFO] Run 'kubectl get pods -n c9s' to verify deployment.")
 
