@@ -10,8 +10,11 @@ def check_helm():
     try:
         subprocess.run(["helm", "version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print("[INFO] Helm is already installed.")
-    except subprocess.CalledProcessError:
+    except FileNotFoundError:
         print("[WARNING] Helm is not installed. Installing now...")
+        install_helm()
+    except subprocess.CalledProcessError:
+        print("[ERROR] Helm command failed. Attempting reinstallation...")
         install_helm()
 
 def install_helm():
