@@ -66,7 +66,7 @@ def main():
     install_clabverter()
     manifest_file = "generated-manifest.yml"
 
-    topology_file = "ground.clab.yml"
+    topology_file = "stress.clab.yml"
     convert_deploy(topology_file)
     verify_deployment()
     
