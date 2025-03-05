@@ -1,0 +1,1385 @@
+mgmt:
+  ipv4-subnet: 10.254.0.0/16
+  network: clab_ground
+name: ground-network
+topology:
+  kinds:
+    arista_ceos:
+      image: ceos
+    ceos:
+      image: ceos
+    linux:
+      image: alpine
+  nodes:
+    a16rtg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.172
+      startup-config: configs/end.cfg
+    a16rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.122
+      startup-config: configs/end.cfg
+    a16rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.123
+      startup-config: configs/end.cfg
+    a16ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.195
+      startup-config: configs/end.cfg
+    a16ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.196
+      startup-config: configs/end.cfg
+    a16svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.209
+      startup-config: configs/end.cfg
+    a16svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.210
+      startup-config: configs/end.cfg
+    a16svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.136
+      startup-config: configs/end.cfg
+    a16svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.137
+      startup-config: configs/end.cfg
+    a16svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.168
+      startup-config: configs/end.cfg
+    a16svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.169
+      startup-config: configs/end.cfg
+    a16svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.170
+      startup-config: configs/end.cfg
+    a16svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.171
+      startup-config: configs/end.cfg
+    a16svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.223
+      startup-config: configs/end.cfg
+    a16svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.224
+      startup-config: configs/end.cfg
+    a16swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.106
+      startup-config: configs/end.cfg
+    a16swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.107
+      startup-config: configs/end.cfg
+    a16swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.108
+      startup-config: configs/end.cfg
+    a16swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.41
+      startup-config: configs/end.cfg
+    a16swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.42
+      startup-config: configs/end.cfg
+    a16swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.135
+      startup-config: configs/end.cfg
+    a16swg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.181
+      startup-config: configs/end.cfg
+    a16swg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.182
+      startup-config: configs/end.cfg
+    a16swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.163
+      startup-config: configs/end.cfg
+    a16sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.23
+      startup-config: configs/end.cfg
+    a16sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.24
+      startup-config: configs/end.cfg
+    b03antg00:
+      kind: linux
+      mgmt-ipv4: 10.254.0.233
+      startup-config: configs/end.cfg
+    b03antg01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.234
+      startup-config: configs/end.cfg
+    b03antg02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.235
+      startup-config: configs/end.cfg
+    b03comsat01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.251
+      startup-config: configs/end.cfg
+    b03comsat02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.252
+      startup-config: configs/end.cfg
+    b03rtg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.170
+      startup-config: configs/end.cfg
+    b03rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.118
+      startup-config: configs/end.cfg
+    b03rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.119
+      startup-config: configs/end.cfg
+    b03ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.191
+      startup-config: configs/end.cfg
+    b03ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.192
+      startup-config: configs/end.cfg
+    b03svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.205
+      startup-config: configs/end.cfg
+    b03svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.206
+      startup-config: configs/end.cfg
+    b03svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.130
+      startup-config: configs/end.cfg
+    b03svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.131
+      startup-config: configs/end.cfg
+    b03svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.160
+      startup-config: configs/end.cfg
+    b03svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.161
+      startup-config: configs/end.cfg
+    b03svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.162
+      startup-config: configs/end.cfg
+    b03svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.163
+      startup-config: configs/end.cfg
+    b03svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.219
+      startup-config: configs/end.cfg
+    b03svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.220
+      startup-config: configs/end.cfg
+    b03swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.82
+      startup-config: configs/end.cfg
+    b03swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.83
+      startup-config: configs/end.cfg
+    b03swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.84
+      startup-config: configs/end.cfg
+    b03swa040:
+      kind: linux
+      mgmt-ipv4: 10.254.1.85
+      startup-config: configs/end.cfg
+    b03swa050:
+      kind: linux
+      mgmt-ipv4: 10.254.1.86
+      startup-config: configs/end.cfg
+    b03swa060:
+      kind: linux
+      mgmt-ipv4: 10.254.1.87
+      startup-config: configs/end.cfg
+    b03swa070:
+      kind: linux
+      mgmt-ipv4: 10.254.1.88
+      startup-config: configs/end.cfg
+    b03swa080:
+      kind: linux
+      mgmt-ipv4: 10.254.1.89
+      startup-config: configs/end.cfg
+    b03swa090:
+      kind: linux
+      mgmt-ipv4: 10.254.1.90
+      startup-config: configs/end.cfg
+    b03swa100:
+      kind: linux
+      mgmt-ipv4: 10.254.1.91
+      startup-config: configs/end.cfg
+    b03swa110:
+      kind: linux
+      mgmt-ipv4: 10.254.1.92
+      startup-config: configs/end.cfg
+    b03swa120:
+      kind: linux
+      mgmt-ipv4: 10.254.1.93
+      startup-config: configs/end.cfg
+    b03swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.37
+      startup-config: configs/end.cfg
+    b03swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.38
+      startup-config: configs/end.cfg
+    b03swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.129
+      startup-config: configs/end.cfg
+    b03swg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.177
+      startup-config: configs/end.cfg
+    b03swg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.178
+      startup-config: configs/end.cfg
+    b03swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.161
+      startup-config: configs/end.cfg
+    b03sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.19
+      startup-config: configs/end.cfg
+    b03sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.20
+      startup-config: configs/end.cfg
+    b04antg00:
+      kind: linux
+      mgmt-ipv4: 10.254.0.236
+      startup-config: configs/end.cfg
+    b04antg01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.237
+      startup-config: configs/end.cfg
+    b04antg02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.238
+      startup-config: configs/end.cfg
+    b04comsat01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.253
+      startup-config: configs/end.cfg
+    b04comsat02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.254
+      startup-config: configs/end.cfg
+    b04comsat03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.1
+      startup-config: configs/end.cfg
+    b04comsat04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.2
+      startup-config: configs/end.cfg
+    b04rtg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.171
+      startup-config: configs/end.cfg
+    b04rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.120
+      startup-config: configs/end.cfg
+    b04rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.121
+      startup-config: configs/end.cfg
+    b04ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.193
+      startup-config: configs/end.cfg
+    b04ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.194
+      startup-config: configs/end.cfg
+    b04svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.207
+      startup-config: configs/end.cfg
+    b04svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.208
+      startup-config: configs/end.cfg
+    b04svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.133
+      startup-config: configs/end.cfg
+    b04svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.134
+      startup-config: configs/end.cfg
+    b04svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.164
+      startup-config: configs/end.cfg
+    b04svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.165
+      startup-config: configs/end.cfg
+    b04svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.166
+      startup-config: configs/end.cfg
+    b04svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.167
+      startup-config: configs/end.cfg
+    b04svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.221
+      startup-config: configs/end.cfg
+    b04svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.222
+      startup-config: configs/end.cfg
+    b04swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.94
+      startup-config: configs/end.cfg
+    b04swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.95
+      startup-config: configs/end.cfg
+    b04swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.96
+      startup-config: configs/end.cfg
+    b04swa040:
+      kind: linux
+      mgmt-ipv4: 10.254.1.97
+      startup-config: configs/end.cfg
+    b04swa050:
+      kind: linux
+      mgmt-ipv4: 10.254.1.98
+      startup-config: configs/end.cfg
+    b04swa060:
+      kind: linux
+      mgmt-ipv4: 10.254.1.99
+      startup-config: configs/end.cfg
+    b04swa070:
+      kind: linux
+      mgmt-ipv4: 10.254.1.100
+      startup-config: configs/end.cfg
+    b04swa080:
+      kind: linux
+      mgmt-ipv4: 10.254.1.101
+      startup-config: configs/end.cfg
+    b04swa090:
+      kind: linux
+      mgmt-ipv4: 10.254.1.102
+      startup-config: configs/end.cfg
+    b04swa100:
+      kind: linux
+      mgmt-ipv4: 10.254.1.103
+      startup-config: configs/end.cfg
+    b04swa110:
+      kind: linux
+      mgmt-ipv4: 10.254.1.104
+      startup-config: configs/end.cfg
+    b04swa120:
+      kind: linux
+      mgmt-ipv4: 10.254.1.105
+      startup-config: configs/end.cfg
+    b04swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.39
+      startup-config: configs/end.cfg
+    b04swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.40
+      startup-config: configs/end.cfg
+    b04swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.132
+      startup-config: configs/end.cfg
+    b04swg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.179
+      startup-config: configs/end.cfg
+    b04swg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.180
+      startup-config: configs/end.cfg
+    b04swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.162
+      startup-config: configs/end.cfg
+    b04sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.21
+      startup-config: configs/end.cfg
+    b04sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.22
+      startup-config: configs/end.cfg
+    c12fwi001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.150
+      startup-config: configs/end.cfg
+    c12fwi001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.151
+      startup-config: configs/end.cfg
+    c12rfx001:
+      kind: linux
+      mgmt-ipv4: 10.254.1.154
+      startup-config: configs/end.cfg
+    c12rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.116
+      startup-config: configs/end.cfg
+    c12rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.117
+      startup-config: configs/end.cfg
+    c12ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.125
+      startup-config: configs/end.cfg
+    c12ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.126
+      startup-config: configs/end.cfg
+    c12svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.127
+      startup-config: configs/end.cfg
+    c12svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.128
+      startup-config: configs/end.cfg
+    c12svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.156
+      startup-config: configs/end.cfg
+    c12svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.157
+      startup-config: configs/end.cfg
+    c12svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.158
+      startup-config: configs/end.cfg
+    c12svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.159
+      startup-config: configs/end.cfg
+    c12swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.57
+      startup-config: configs/end.cfg
+    c12swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.58
+      startup-config: configs/end.cfg
+    c12swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.59
+      startup-config: configs/end.cfg
+    c12swa040:
+      kind: linux
+      mgmt-ipv4: 10.254.1.60
+      startup-config: configs/end.cfg
+    c12swa050:
+      kind: linux
+      mgmt-ipv4: 10.254.1.61
+      startup-config: configs/end.cfg
+    c12swa060:
+      kind: linux
+      mgmt-ipv4: 10.254.1.62
+      startup-config: configs/end.cfg
+    c12swa070:
+      kind: linux
+      mgmt-ipv4: 10.254.1.63
+      startup-config: configs/end.cfg
+    c12swa080:
+      kind: linux
+      mgmt-ipv4: 10.254.1.64
+      startup-config: configs/end.cfg
+    c12swa090:
+      kind: linux
+      mgmt-ipv4: 10.254.1.65
+      startup-config: configs/end.cfg
+    c12swa100:
+      kind: linux
+      mgmt-ipv4: 10.254.1.66
+      startup-config: configs/end.cfg
+    c12swa110:
+      kind: linux
+      mgmt-ipv4: 10.254.1.67
+      startup-config: configs/end.cfg
+    c12swa120:
+      kind: linux
+      mgmt-ipv4: 10.254.1.68
+      startup-config: configs/end.cfg
+    c12swa130:
+      kind: linux
+      mgmt-ipv4: 10.254.1.69
+      startup-config: configs/end.cfg
+    c12swa140:
+      kind: linux
+      mgmt-ipv4: 10.254.1.70
+      startup-config: configs/end.cfg
+    c12swa150:
+      kind: linux
+      mgmt-ipv4: 10.254.1.71
+      startup-config: configs/end.cfg
+    c12swa160:
+      kind: linux
+      mgmt-ipv4: 10.254.1.72
+      startup-config: configs/end.cfg
+    c12swa170:
+      kind: linux
+      mgmt-ipv4: 10.254.1.73
+      startup-config: configs/end.cfg
+    c12swa180:
+      kind: linux
+      mgmt-ipv4: 10.254.1.74
+      startup-config: configs/end.cfg
+    c12swa190:
+      kind: linux
+      mgmt-ipv4: 10.254.1.75
+      startup-config: configs/end.cfg
+    c12swa200:
+      kind: linux
+      mgmt-ipv4: 10.254.1.76
+      startup-config: configs/end.cfg
+    c12swa210:
+      kind: linux
+      mgmt-ipv4: 10.254.1.77
+      startup-config: configs/end.cfg
+    c12swa220:
+      kind: linux
+      mgmt-ipv4: 10.254.1.78
+      startup-config: configs/end.cfg
+    c12swa230:
+      kind: linux
+      mgmt-ipv4: 10.254.1.79
+      startup-config: configs/end.cfg
+    c12swa240:
+      kind: linux
+      mgmt-ipv4: 10.254.1.80
+      startup-config: configs/end.cfg
+    c12swa250:
+      kind: linux
+      mgmt-ipv4: 10.254.1.81
+      startup-config: configs/end.cfg
+    c12swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.35
+      startup-config: configs/end.cfg
+    c12swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.36
+      startup-config: configs/end.cfg
+    c12swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.124
+      startup-config: configs/end.cfg
+    c12swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.160
+      startup-config: configs/end.cfg
+    c12sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.17
+      startup-config: configs/end.cfg
+    c12sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.18
+      startup-config: configs/end.cfg
+    k02antg00:
+      kind: linux
+      mgmt-ipv4: 10.254.0.248
+      startup-config: configs/end.cfg
+    k02antg01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.249
+      startup-config: configs/end.cfg
+    k02antg02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.250
+      startup-config: configs/end.cfg
+    k02comsat01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.15
+      startup-config: configs/end.cfg
+    k02comsat02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.16
+      startup-config: configs/end.cfg
+    k02rtg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.176
+      startup-config: configs/end.cfg
+    k02rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.105
+      startup-config: configs/end.cfg
+    k02rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.106
+      startup-config: configs/end.cfg
+    k02ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.203
+      startup-config: configs/end.cfg
+    k02ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.204
+      startup-config: configs/end.cfg
+    k02svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.217
+      startup-config: configs/end.cfg
+    k02svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.218
+      startup-config: configs/end.cfg
+    k02svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.158
+      startup-config: configs/end.cfg
+    k02svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.159
+      startup-config: configs/end.cfg
+    k02svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.190
+      startup-config: configs/end.cfg
+    k02svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.191
+      startup-config: configs/end.cfg
+    k02svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.192
+      startup-config: configs/end.cfg
+    k02svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.193
+      startup-config: configs/end.cfg
+    k02svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.231
+      startup-config: configs/end.cfg
+    k02svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.232
+      startup-config: configs/end.cfg
+    k02swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.138
+      startup-config: configs/end.cfg
+    k02swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.139
+      startup-config: configs/end.cfg
+    k02swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.140
+      startup-config: configs/end.cfg
+    k02swa040:
+      kind: linux
+      mgmt-ipv4: 10.254.1.141
+      startup-config: configs/end.cfg
+    k02swa050:
+      kind: linux
+      mgmt-ipv4: 10.254.1.142
+      startup-config: configs/end.cfg
+    k02swa060:
+      kind: linux
+      mgmt-ipv4: 10.254.1.143
+      startup-config: configs/end.cfg
+    k02swa070:
+      kind: linux
+      mgmt-ipv4: 10.254.1.144
+      startup-config: configs/end.cfg
+    k02swa080:
+      kind: linux
+      mgmt-ipv4: 10.254.1.145
+      startup-config: configs/end.cfg
+    k02swa090:
+      kind: linux
+      mgmt-ipv4: 10.254.1.146
+      startup-config: configs/end.cfg
+    k02swa100:
+      kind: linux
+      mgmt-ipv4: 10.254.1.147
+      startup-config: configs/end.cfg
+    k02swa110:
+      kind: linux
+      mgmt-ipv4: 10.254.1.148
+      startup-config: configs/end.cfg
+    k02swa120:
+      kind: linux
+      mgmt-ipv4: 10.254.1.149
+      startup-config: configs/end.cfg
+    k02swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.52
+      startup-config: configs/end.cfg
+    k02swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.53
+      startup-config: configs/end.cfg
+    k02swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.157
+      startup-config: configs/end.cfg
+    k02swg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.189
+      startup-config: configs/end.cfg
+    k02swg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.190
+      startup-config: configs/end.cfg
+    k02swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.169
+      startup-config: configs/end.cfg
+    k02sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.33
+      startup-config: configs/end.cfg
+    k02sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.34
+      startup-config: configs/end.cfg
+    m07antg00:
+      kind: linux
+      mgmt-ipv4: 10.254.0.245
+      startup-config: configs/end.cfg
+    m07antg01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.246
+      startup-config: configs/end.cfg
+    m07antg02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.247
+      startup-config: configs/end.cfg
+    m07comsat01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.13
+      startup-config: configs/end.cfg
+    m07comsat02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.14
+      startup-config: configs/end.cfg
+    m07rtg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.175
+      startup-config: configs/end.cfg
+    m07rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.107
+      startup-config: configs/end.cfg
+    m07rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.108
+      startup-config: configs/end.cfg
+    m07ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.201
+      startup-config: configs/end.cfg
+    m07ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.202
+      startup-config: configs/end.cfg
+    m07svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.215
+      startup-config: configs/end.cfg
+    m07svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.216
+      startup-config: configs/end.cfg
+    m07svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.155
+      startup-config: configs/end.cfg
+    m07svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.156
+      startup-config: configs/end.cfg
+    m07svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.186
+      startup-config: configs/end.cfg
+    m07svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.187
+      startup-config: configs/end.cfg
+    m07svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.188
+      startup-config: configs/end.cfg
+    m07svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.189
+      startup-config: configs/end.cfg
+    m07svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.229
+      startup-config: configs/end.cfg
+    m07svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.230
+      startup-config: configs/end.cfg
+    m07swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.126
+      startup-config: configs/end.cfg
+    m07swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.127
+      startup-config: configs/end.cfg
+    m07swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.128
+      startup-config: configs/end.cfg
+    m07swa040:
+      kind: linux
+      mgmt-ipv4: 10.254.1.129
+      startup-config: configs/end.cfg
+    m07swa050:
+      kind: linux
+      mgmt-ipv4: 10.254.1.130
+      startup-config: configs/end.cfg
+    m07swa060:
+      kind: linux
+      mgmt-ipv4: 10.254.1.131
+      startup-config: configs/end.cfg
+    m07swa070:
+      kind: linux
+      mgmt-ipv4: 10.254.1.132
+      startup-config: configs/end.cfg
+    m07swa080:
+      kind: linux
+      mgmt-ipv4: 10.254.1.133
+      startup-config: configs/end.cfg
+    m07swa090:
+      kind: linux
+      mgmt-ipv4: 10.254.1.134
+      startup-config: configs/end.cfg
+    m07swa100:
+      kind: linux
+      mgmt-ipv4: 10.254.1.135
+      startup-config: configs/end.cfg
+    m07swa110:
+      kind: linux
+      mgmt-ipv4: 10.254.1.136
+      startup-config: configs/end.cfg
+    m07swa120:
+      kind: linux
+      mgmt-ipv4: 10.254.1.137
+      startup-config: configs/end.cfg
+    m07swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.50
+      startup-config: configs/end.cfg
+    m07swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.51
+      startup-config: configs/end.cfg
+    m07swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.154
+      startup-config: configs/end.cfg
+    m07swg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.187
+      startup-config: configs/end.cfg
+    m07swg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.188
+      startup-config: configs/end.cfg
+    m07swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.168
+      startup-config: configs/end.cfg
+    m07sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.31
+      startup-config: configs/end.cfg
+    m07sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.32
+      startup-config: configs/end.cfg
+    n02rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.109
+      startup-config: configs/end.cfg
+    n02ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.150
+      startup-config: configs/end.cfg
+    n02ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.151
+      startup-config: configs/end.cfg
+    n02svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.152
+      startup-config: configs/end.cfg
+    n02svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.153
+      startup-config: configs/end.cfg
+    n02svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.184
+      startup-config: configs/end.cfg
+    n02svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.185
+      startup-config: configs/end.cfg
+    n02swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.124
+      startup-config: configs/end.cfg
+    n02swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.125
+      startup-config: configs/end.cfg
+    n02swc001:
+      kind: linux
+      mgmt-ipv4: 10.254.1.49
+      startup-config: configs/end.cfg
+    n02swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.149
+      startup-config: configs/end.cfg
+    n02swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.167
+      startup-config: configs/end.cfg
+    s11antg00:
+      kind: linux
+      mgmt-ipv4: 10.254.0.242
+      startup-config: configs/end.cfg
+    s11antg01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.243
+      startup-config: configs/end.cfg
+    s11antg02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.244
+      startup-config: configs/end.cfg
+    s11comsat01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.9
+      startup-config: configs/end.cfg
+    s11comsat02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.10
+      startup-config: configs/end.cfg
+    s11comsat03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.11
+      startup-config: configs/end.cfg
+    s11comsat04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.12
+      startup-config: configs/end.cfg
+    s11fwi001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.152
+      startup-config: configs/end.cfg
+    s11fwi001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.153
+      startup-config: configs/end.cfg
+    s11rfx001:
+      kind: linux
+      mgmt-ipv4: 10.254.1.155
+      startup-config: configs/end.cfg
+    s11rtg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.174
+      startup-config: configs/end.cfg
+    s11rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.110
+      startup-config: configs/end.cfg
+    s11rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.111
+      startup-config: configs/end.cfg
+    s11ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.199
+      startup-config: configs/end.cfg
+    s11ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.200
+      startup-config: configs/end.cfg
+    s11svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.213
+      startup-config: configs/end.cfg
+    s11svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.214
+      startup-config: configs/end.cfg
+    s11svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.147
+      startup-config: configs/end.cfg
+    s11svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.148
+      startup-config: configs/end.cfg
+    s11svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.180
+      startup-config: configs/end.cfg
+    s11svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.181
+      startup-config: configs/end.cfg
+    s11svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.182
+      startup-config: configs/end.cfg
+    s11svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.183
+      startup-config: configs/end.cfg
+    s11svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.227
+      startup-config: configs/end.cfg
+    s11svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.228
+      startup-config: configs/end.cfg
+    s11swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.112
+      startup-config: configs/end.cfg
+    s11swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.113
+      startup-config: configs/end.cfg
+    s11swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.114
+      startup-config: configs/end.cfg
+    s11swa040:
+      kind: linux
+      mgmt-ipv4: 10.254.1.115
+      startup-config: configs/end.cfg
+    s11swa050:
+      kind: linux
+      mgmt-ipv4: 10.254.1.116
+      startup-config: configs/end.cfg
+    s11swa060:
+      kind: linux
+      mgmt-ipv4: 10.254.1.117
+      startup-config: configs/end.cfg
+    s11swa070:
+      kind: linux
+      mgmt-ipv4: 10.254.1.118
+      startup-config: configs/end.cfg
+    s11swa080:
+      kind: linux
+      mgmt-ipv4: 10.254.1.119
+      startup-config: configs/end.cfg
+    s11swa090:
+      kind: linux
+      mgmt-ipv4: 10.254.1.120
+      startup-config: configs/end.cfg
+    s11swa100:
+      kind: linux
+      mgmt-ipv4: 10.254.1.121
+      startup-config: configs/end.cfg
+    s11swa110:
+      kind: linux
+      mgmt-ipv4: 10.254.1.122
+      startup-config: configs/end.cfg
+    s11swa120:
+      kind: linux
+      mgmt-ipv4: 10.254.1.123
+      startup-config: configs/end.cfg
+    s11swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.47
+      startup-config: configs/end.cfg
+    s11swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.48
+      startup-config: configs/end.cfg
+    s11swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.146
+      startup-config: configs/end.cfg
+    s11swg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.185
+      startup-config: configs/end.cfg
+    s11swg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.186
+      startup-config: configs/end.cfg
+    s11swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.166
+      startup-config: configs/end.cfg
+    s11sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.29
+      startup-config: configs/end.cfg
+    s11sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.30
+      startup-config: configs/end.cfg
+    s76rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.114
+      startup-config: configs/end.cfg
+    s76rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.115
+      startup-config: configs/end.cfg
+    s76ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.139
+      startup-config: configs/end.cfg
+    s76ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.140
+      startup-config: configs/end.cfg
+    s76svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.141
+      startup-config: configs/end.cfg
+    s76svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.142
+      startup-config: configs/end.cfg
+    s76svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.172
+      startup-config: configs/end.cfg
+    s76svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.173
+      startup-config: configs/end.cfg
+    s76svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.174
+      startup-config: configs/end.cfg
+    s76svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.175
+      startup-config: configs/end.cfg
+    s76swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.54
+      startup-config: configs/end.cfg
+    s76swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.55
+      startup-config: configs/end.cfg
+    s76swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.56
+      startup-config: configs/end.cfg
+    s76swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.43
+      startup-config: configs/end.cfg
+    s76swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.44
+      startup-config: configs/end.cfg
+    s76swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.138
+      startup-config: configs/end.cfg
+    s76swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.164
+      startup-config: configs/end.cfg
+    s76sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.25
+      startup-config: configs/end.cfg
+    s76sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.26
+      startup-config: configs/end.cfg
+    t19antg00:
+      kind: linux
+      mgmt-ipv4: 10.254.0.239
+      startup-config: configs/end.cfg
+    t19antg01:
+      kind: linux
+      mgmt-ipv4: 10.254.0.240
+      startup-config: configs/end.cfg
+    t19antg02:
+      kind: linux
+      mgmt-ipv4: 10.254.0.241
+      startup-config: configs/end.cfg
+    t19comsat01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.3
+      startup-config: configs/end.cfg
+    t19comsat02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.4
+      startup-config: configs/end.cfg
+    t19comsat03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.5
+      startup-config: configs/end.cfg
+    t19comsat04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.6
+      startup-config: configs/end.cfg
+    t19comsat05:
+      kind: linux
+      mgmt-ipv4: 10.254.1.7
+      startup-config: configs/end.cfg
+    t19comsat06:
+      kind: linux
+      mgmt-ipv4: 10.254.1.8
+      startup-config: configs/end.cfg
+    t19rtg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.173
+      startup-config: configs/end.cfg
+    t19rtw001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.112
+      startup-config: configs/end.cfg
+    t19rtw002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.113
+      startup-config: configs/end.cfg
+    t19ssd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.197
+      startup-config: configs/end.cfg
+    t19ssd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.198
+      startup-config: configs/end.cfg
+    t19svcg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.211
+      startup-config: configs/end.cfg
+    t19svcg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.212
+      startup-config: configs/end.cfg
+    t19svd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.144
+      startup-config: configs/end.cfg
+    t19svd002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.145
+      startup-config: configs/end.cfg
+    t19svp01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.176
+      startup-config: configs/end.cfg
+    t19svp02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.177
+      startup-config: configs/end.cfg
+    t19svp03:
+      kind: linux
+      mgmt-ipv4: 10.254.1.178
+      startup-config: configs/end.cfg
+    t19svp04:
+      kind: linux
+      mgmt-ipv4: 10.254.1.179
+      startup-config: configs/end.cfg
+    t19svpg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.225
+      startup-config: configs/end.cfg
+    t19svpg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.226
+      startup-config: configs/end.cfg
+    t19swa010:
+      kind: linux
+      mgmt-ipv4: 10.254.1.109
+      startup-config: configs/end.cfg
+    t19swa020:
+      kind: linux
+      mgmt-ipv4: 10.254.1.110
+      startup-config: configs/end.cfg
+    t19swa030:
+      kind: linux
+      mgmt-ipv4: 10.254.1.111
+      startup-config: configs/end.cfg
+    t19swc001a:
+      kind: linux
+      mgmt-ipv4: 10.254.1.45
+      startup-config: configs/end.cfg
+    t19swc001b:
+      kind: linux
+      mgmt-ipv4: 10.254.1.46
+      startup-config: configs/end.cfg
+    t19swd001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.143
+      startup-config: configs/end.cfg
+    t19swg001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.183
+      startup-config: configs/end.cfg
+    t19swg002:
+      kind: linux
+      mgmt-ipv4: 10.254.0.184
+      startup-config: configs/end.cfg
+    t19swp001:
+      kind: linux
+      mgmt-ipv4: 10.254.0.165
+      startup-config: configs/end.cfg
+    t19sws01:
+      kind: linux
+      mgmt-ipv4: 10.254.1.27
+      startup-config: configs/end.cfg
+    t19sws02:
+      kind: linux
+      mgmt-ipv4: 10.254.1.28
+      startup-config: configs/end.cfg
