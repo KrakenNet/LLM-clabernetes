@@ -37,27 +37,9 @@ def install_helm():
         sys.exit(1)
 
 def install_clabernetes():
-    """Ensures kubeconfig is set before installing Clabernetes via Helm."""
-    kubeconfig = os.getenv("KUBECONFIG", os.path.expanduser("~/.kube/config"))
-    
-    if not os.path.exists(kubeconfig):
-        print(f"[ERROR] Kubeconfig file not found at {kubeconfig}. Make sure Kubernetes is running and configured.")
-        sys.exit(1)
-    
-    env = os.environ.copy()
-    env["KUBECONFIG"] = kubeconfig  # Ensure Helm uses the correct kubeconfig
-    
-    command = "helm upgrade --install --create-namespace --namespace c9s clabernetes oci://ghcr.io/srl-labs/clabernetes/clabernetes"
-    
-    try:
-        subprocess.run(command, shell=True, check=True, env=env)
-        print("[SUCCESS] Clabernetes installed successfully via Helm.")
-    except subprocess.CalledProcessError as e:
-        print("[ERROR] Installing Clabernetes via Helm failed.")
-        print(f"Command: {command}")
-        print(f"Error Output:\n{e}")
-        sys.exit(1)
-
+    """Installs Clabernetes into the Kubernetes cluster."""
+    run_command("helm upgrade --install --create-namespace --namespace c9s clabernetes oci://ghcr.io/srl-labs/clabernetes/clabernetes", 
+                "Installing Clabernetes via Helm")
 
 def install_un_s_images():
     """Set up the UnS images in the Kubernetes cluster."""
@@ -82,7 +64,8 @@ def main():
     check_helm()  # Ensure Helm is installed before proceeding
     install_clabernetes()
     install_clabverter()
-    
+    manifest_file = "generated-manifest.yml"
+
     topology_file = "ground.clab.yml"
     convert_deploy(topology_file)
     verify_deployment()
