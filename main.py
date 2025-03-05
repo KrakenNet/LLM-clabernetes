@@ -4,6 +4,8 @@ import subprocess
 import sys
 
 TOOLKIT_DIR = "/usr/local/bin"
+CUR_DIR = os.getcwd()
+
 SCRIPTS = {
     "kkk.sh": "kkk",
     "kube_up.py": "kube_up.py",
@@ -73,29 +75,29 @@ def install_koolkit():
 
 def run_kube_up():
     """Runs kube_up.py and if successful, runs claber_up.py."""
-    kube_up_path = os.path.join(TOOLKIT_DIR, "kube_up.py")
-    claber_up_path = os.path.join(TOOLKIT_DIR, "claber_up.py")
+    kube_up_path = os.path.join(CUR_DIR, "kube_up.py")
+    claber_up_path = os.path.join(CUR_DIR, "claber_up.py")
 
     if not os.path.exists(kube_up_path):
         print(f"[ERROR] {kube_up_path} not found! Cannot start Kubernetes.")
         return
 
     print("\n[INFO] Running kube_up.py...\n")
-    kube_up_process = subprocess.run(["python3", kube_up_path], capture_output=True, text=True)
+    kube_up_process = subprocess.run(["python3", kube_up_path], stdout=None, stderr=None)
 
     if kube_up_process.returncode == 0:
         print("\n[SUCCESS] kube_up.py completed successfully!")
         
-        if os.path.exists(claber_up_path):
-            print("\n[INFO] Running claber_up.py...\n")
-            claber_up_process = subprocess.run(["python3", claber_up_path], capture_output=True, text=True)
+        # if os.path.exists(claber_up_path):
+        #     print("\n[INFO] Running claber_up.py...\n")
+        #     claber_up_process = subprocess.run(["python3", claber_up_path], capture_output=True, text=True)
 
-            if claber_up_process.returncode == 0:
-                print("\n[SUCCESS] claber_up.py completed successfully!")
-            else:
-                print(f"\n[ERROR] claber_up.py failed with error:\n{claber_up_process.stderr}")
-        else:
-            print(f"\n[WARNING] {claber_up_path} not found. Skipping claber_up.py.")
+        #     if claber_up_process.returncode == 0:
+        #         print("\n[SUCCESS] claber_up.py completed successfully!")
+        #     else:
+        #         print(f"\n[ERROR] claber_up.py failed with error:\n{claber_up_process.stderr}")
+        # else:
+        #     print(f"\n[WARNING] {claber_up_path} not found. Skipping claber_up.py.")
     else:
         print(f"\n[ERROR] kube_up.py failed with error:\n{kube_up_process.stderr}")
 

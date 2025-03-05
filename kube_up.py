@@ -4,7 +4,7 @@ import sys
 from local import run_command
 import time
 
-cluster_n = 'cluster-1'
+# cluster_n = 'cluster-1'
 
 def check_installed(package):
     """Checks if a package is installed and returns True if found."""
@@ -16,6 +16,24 @@ def check_installed(package):
     print(f"[INSTALL] {package} is not installed.")
 
     return False
+
+
+def check_and_kill_ports():
+    """Checks if required Kubernetes ports are available and kills any processes using them."""
+    required_ports = [6443, 2379, 2380, 10250, 10259, 10257]
+    
+    for port in required_ports:
+        result = subprocess.run(f"sudo lsof -i :{port}", shell=True, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"[WARNING] Port {port} is in use. Attempting to free it...")
+            lines = result.stdout.split('\n')
+            for line in lines[1:]:  
+                parts = line.split()
+                if len(parts) > 1:
+                    pid = parts[1]
+                    run_command(f"sudo kill -9 {pid}", f"Killing process {pid} using port {port}")
+        else:
+            print(f"[INFO] Port {port} is available.")
 
 def setup_ips():
     print("[INFO] setting up ip's for kubernetes")
@@ -69,37 +87,37 @@ def check_and_load_netfilter():
 
 
 #not instantiated yet
-def ensure_hostname_in_hosts():
-    """Ensures the current hostname is present in /etc/hosts."""
-    hostname = cluster_n
+# def ensure_hostname_in_hosts():
+#     """Ensures the current hostname is present in /etc/hosts."""
+#     hostname = cluster_n
 
-    try:
-        # Read the contents of /etc/hosts
-        with open("/etc/hosts", "r") as f:
-            lines = f.readlines()
+#     try:
+#         # Read the contents of /etc/hosts
+#         with open("/etc/hosts", "r") as f:
+#             lines = f.readlines()
 
-        # Check if the hostname already exists in /etc/hosts
-        for line in lines:
-            if hostname in line:
-                print(f"[INFO] Hostname '{hostname}' is already present in /etc/hosts.")
-                return
+#         # Check if the hostname already exists in /etc/hosts
+#         for line in lines:
+#             if hostname in line:
+#                 print(f"[INFO] Hostname '{hostname}' is already present in /etc/hosts.")
+#                 return
 
-        # Get the machine's primary IP address
-        ip_address = subprocess.getoutput("hostname -I | awk '{print $1}'").strip()
+#         # Get the machine's primary IP address
+#         ip_address = subprocess.getoutput("hostname -I | awk '{print $1}'").strip()
 
-        if not ip_address:
-            print("[ERROR] Could not determine the system's IP address.")
-            return
+#         if not ip_address:
+#             print("[ERROR] Could not determine the system's IP address.")
+#             return
 
-        # Append the new hostname entry
-        new_entry = f"{ip_address} {hostname}\n"
-        with open("/etc/hosts", "a") as f:
-            f.write(new_entry)
+#         # Append the new hostname entry
+#         new_entry = f"{ip_address} {hostname}\n"
+#         with open("/etc/hosts", "a") as f:
+#             f.write(new_entry)
 
-        print(f"[SUCCESS] Added '{hostname}' to /etc/hosts with IP: {ip_address}")
+#         print(f"[SUCCESS] Added '{hostname}' to /etc/hosts with IP: {ip_address}")
 
-    except Exception as e:
-        print(f"[ERROR] Failed to modify /etc/hosts: {e}")
+#     except Exception as e:
+#         print(f"[ERROR] Failed to modify /etc/hosts: {e}")
 
 
 def wait_for_flannel():
@@ -228,7 +246,7 @@ def install_cri_dockerd():
     run_command("sudo sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service", "Updating service file paths")
     run_command("sudo systemctl daemon-reload", "Reloading systemd daemon")
     run_command("sudo systemctl enable cri-docker.service", "Enabling cri-dockerd service")
-    run_command("sudo systemctl enable --now cri-dockerd.socket", "Starting and enabling cri-dockerd socket")
+    run_command("sudo systemctl enable --now cri-docker.socket", "Starting and enabling cri-dockerd socket")
 
 def install_kubernetes():
     """Installs Kubernetes components (kubelet, kubeadm, kubectl)."""
@@ -259,9 +277,10 @@ def initialize_cluster():
     run_command("sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config", "Copying kubeconfig file")
     run_command("sudo chown $(id -u):$(id -g) $HOME/.kube/config", "Setting kubeconfig ownership")
     install_flannel()
-    # install_calico()
-    print ('[INFO] Clearing the Taint')
-    run_command("kubectl taint nodes --all node-role.kubernetes.io/control-plane-", "Removing control-plane taint")
+    
+    # IF YOUR REQUIRE ISNTALLING PODS ON THE MASTER NODE, PLEASE UNCOMMENT THE FOLLOWING LINES
+    #print ('[INFO] Clearing the Taint')
+    #run_command("kubectl taint nodes --all node-role.kubernetes.io/control-plane-", "Removing control-plane taint")
 
 
 def setup_kube_vip_loadbalancer():
@@ -269,9 +288,17 @@ def setup_kube_vip_loadbalancer():
     run_command("kubectl apply -f https://kube-vip.io/manifests/rbac.yaml", "Applying Kube-VIP RBAC")
     run_command("kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml", "Applying Kube-VIP Cloud Controller")
     run_command("kubectl create configmap --namespace kube-system kubevip --from-literal range-global=172.18.1.10-172.18.1.250", "Creating Kube-VIP ConfigMap")
-    # run_command("KVVERSION=$(curl -sL https://api.github.com/repos/kube-vip/kube-vip/releases | jq -r '.[0].name')", "Fetching latest Kube-VIP version")
-    # run_command("alias kube-vip='docker run --network host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION'", "Setting up kube-vip alias")
-    run_command("./kube_vip_dae.sh", "Deploying Kube-VIP Daemonset")
+
+    # Try running kube-vip script without sudo first
+    try:
+        run_command("./kube_vip_dae.sh", "Deploying Kube-VIP Daemonset")
+    except subprocess.CalledProcessError as e:
+        if "permission denied" in str(e).lower() or "operation not permitted" in str(e).lower():
+            print("[WARNING] Permission error detected, retrying with sudo...")
+            run_command("sudo ./kube_vip_dae.sh", "Deploying Kube-VIP Daemonset (sudo)")
+        else:
+            raise  # If the error is not permission-related, re-raise it
+
 
 
 def main():
@@ -280,6 +307,7 @@ def main():
     install_dependencies()
     setup_ips()
     check_and_load_netfilter()
+    check_and_kill_ports()
     install_docker()
     install_cri_dockerd()
     install_kubernetes()
