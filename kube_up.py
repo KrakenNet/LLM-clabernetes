@@ -290,19 +290,28 @@ def initialize_cluster():
 
 def setup_kube_vip_loadbalancer():
     """Deploys Kube-VIP LoadBalancer after cluster setup."""
+    
+    # Ensure KUBECONFIG is set properly
+    kubeconfig_path = "/etc/kubernetes/admin.conf"
+    if os.path.exists(kubeconfig_path):
+        print("[INFO] Setting up KUBECONFIG for Kubernetes operations...")
+        run_command(f"sudo chown $(id -u):$(id -g) {kubeconfig_path}", "Setting correct ownership for KUBECONFIG")
+        os.environ["KUBECONFIG"] = kubeconfig_path
+        run_command(f"export KUBECONFIG={kubeconfig_path}", "Exporting KUBECONFIG")
+
+    # Apply Kube-VIP RBAC and ConfigMap
     run_command("kubectl apply -f https://kube-vip.io/manifests/rbac.yaml", "Applying Kube-VIP RBAC")
     run_command("kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml", "Applying Kube-VIP Cloud Controller")
     run_command("kubectl create configmap --namespace kube-system kubevip --from-literal range-global=172.18.1.10-172.18.1.250", "Creating Kube-VIP ConfigMap")
 
-    # Try running kube-vip script without sudo first
+    # Use sudo -E to preserve environment variables
+    kube_vip_cmd = "KUBECONFIG=/etc/kubernetes/admin.conf ./kube_vip_dae.sh"
+    
     try:
-        run_command("./kube_vip_dae.sh", "Deploying Kube-VIP Daemonset")
+        run_command(f"sudo -E {kube_vip_cmd}", "Deploying Kube-VIP Daemonset with sudo -E")
     except subprocess.CalledProcessError as e:
-        if "permission denied" in str(e).lower() or "operation not permitted" in str(e).lower():
-            print("[WARNING] Permission error detected, retrying with sudo...")
-            run_command("sudo ./kube_vip_dae.sh", "Deploying Kube-VIP Daemonset (sudo)")
-        else:
-            raise  # If the error is not permission-related, re-raise it
+        print("[ERROR] Failed to deploy Kube-VIP Daemonset. Check logs for details.")
+        sys.exit(1)
 
 
 
