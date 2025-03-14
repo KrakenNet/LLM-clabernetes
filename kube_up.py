@@ -17,6 +17,8 @@ def check_installed(package):
 
     return False
 
+
+# Needs fixing kube doestn actually get killed since its managing its own processes
 def check_and_kill_ports():
     """Checks if required Kubernetes ports are available and kills any processes using them."""
     required_ports = [6443, 2379, 2380, 10250, 10259, 10257]
@@ -281,6 +283,8 @@ def initialize_cluster():
     run_command("mkdir -p $HOME/.kube", "Creating kubeconfig directory")
     run_command("sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config", "Copying kubeconfig file")
     run_command("sudo chown $(id -u):$(id -g) $HOME/.kube/config", "Setting kubeconfig ownership")
+    run_command("sudo chown $(id -u):$(id -g) /etc/kubernetes/admin.conf", "Settting ownership for admin config")
+
     install_flannel()
     
     # IF YOUR REQUIRE ISNTALLING PODS ON THE MASTER NODE, PLEASE UNCOMMENT THE FOLLOWING LINES
@@ -321,7 +325,7 @@ def main():
     install_dependencies()
     setup_ips()
     check_and_load_netfilter()
-    check_and_kill_ports()
+    # check_and_kill_ports()
     install_docker()
     install_cri_dockerd()
     install_kubernetes()
