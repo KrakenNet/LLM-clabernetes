@@ -274,6 +274,19 @@ def install_kubernetes():
     print("[INFO] Applying kube-proxy configuration")
     run_command("kubectl apply -f https://raw.githubusercontent.com/kubernetes/kubernetes/master/cluster/addons/kube-proxy/kube-proxy.yaml", "Applying kube-proxy settings")
 
+def manage_control_plane_taint():
+    """Asks user if they need to run pods on the control plane node and manages taints accordingly."""
+    while True:
+        response = input("\nDo you need to run pods on the control plane node? (yes/no): ").lower().strip()
+        if response in ['yes', 'no']:
+            if response == 'yes':
+                print("[INFO] Removing control plane taint to allow pods on master node...")
+                run_command("kubectl taint nodes --all node-role.kubernetes.io/control-plane-", "Removing control-plane taint")
+            else:
+                print("[INFO] Keeping control plane taint - pods will not run on master node.")
+            return
+        print("Please answer with 'yes' or 'no'.")
+
 def initialize_cluster():
     """Initializes the Kubernetes cluster using kubeadm with Docker as CRI."""
     if os.path.exists("/etc/kubernetes/admin.conf"):
@@ -287,9 +300,8 @@ def initialize_cluster():
 
     install_flannel()
     
-    # IF YOUR REQUIRE ISNTALLING PODS ON THE MASTER NODE, PLEASE UNCOMMENT THE FOLLOWING LINES
-    #print ('[INFO] Clearing the Taint')
-    #run_command("kubectl taint nodes --all node-role.kubernetes.io/control-plane-", "Removing control-plane taint")
+    # Ask user about control plane taint management
+    manage_control_plane_taint()
 
 
 def setup_kube_vip_loadbalancer():
