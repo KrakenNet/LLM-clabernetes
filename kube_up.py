@@ -278,14 +278,14 @@ def manage_control_plane_taint():
     """Asks user if they need to run pods on the control plane node and manages taints accordingly."""
     while True:
         response = input("\nDo you need to run pods on the control plane node? (yes/no): ").lower().strip()
-        if response in ['yes', 'no']:
-            if response == 'yes':
+        if response in ['yes', 'y', 'no', 'n']:
+            if response in ['yes', 'y']:
                 print("[INFO] Removing control plane taint to allow pods on master node...")
                 run_command("kubectl taint nodes --all node-role.kubernetes.io/control-plane-", "Removing control-plane taint")
             else:
                 print("[INFO] Keeping control plane taint - pods will not run on master node.")
             return
-        print("Please answer with 'yes' or 'no'.")
+        print("Please answer with 'yes'/'y' or 'no'/'n'.")
 
 def initialize_cluster():
     """Initializes the Kubernetes cluster using kubeadm with Docker as CRI."""
